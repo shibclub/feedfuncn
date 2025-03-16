@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FeedGame DApp</title>
-    <link rel="icon" type="image/png" href="images/feed.png">
+    <link rel="icon" type="image/png" href="images/bone.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -207,7 +207,7 @@
         <div class="header-top">
             <span class="balance" id="fameBalance">0 FAME</span>
             <div class="actions">
-                <button class="action-btn" onclick="window.open('https://x.com/feedcto', '_blank')"><i class="fab fa-twitter"></i></button>
+                <button class="action-btn" onclick="window.open('https://x.com/woofswap', '_blank')"><i class="fab fa-twitter"></i></button>
             </div>
         </div>
         <div class="header-content">
@@ -271,9 +271,8 @@
         let web3, accounts, contract, feedContract;
         const contractAddress = "0xaa6A562a1F5c078450Ab9688E57c6C9e2c6E6B42";
         const feedAddress = "0xe9Cb2D7ADC24Fc59FE00D6C0A0669BDF16805Fe0";
-        const betAmount = web3.utils.toWei('1000000000', 'ether');
         const contractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"bettor","type":"address"},{"indexed":false,"internalType":"uint256","name":"betNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"round","type":"uint256"}],"name":"BetPlaced","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"winner","type":"address"},{"indexed":false,"internalType":"uint256","name":"winningNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"round","type":"uint256"}],"name":"RoundCompleted","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"round","type":"uint256"}],"name":"RoundStarted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"burner","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"TokensBurned","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[],"name":"BET_AMOUNT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"BURN_ADDRESS","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"BURN_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"FEED","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LOSER_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_BETS","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"WINNER_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"burn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"currentBets","outputs":[{"internalType":"address","name":"bettor","type":"address"},{"internalType":"uint256","name":"blockNumber","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"currentRound","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getCurrentBetCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getCurrentBets","outputs":[{"components":[{"internalType":"address","name":"bettor","type":"address"},{"internalType":"uint256","name":"blockNumber","type":"uint256"}],"internalType":"struct FeedGame.Bet[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"round","type":"uint256"}],"name":"getRoundInfo","outputs":[{"components":[{"internalType":"address","name":"winner","type":"address"},{"internalType":"uint256","name":"winningNumber","type":"uint256"},{"internalType":"uint256","name":"totalBets","type":"uint256"},{"internalType":"bool","name":"completed","type":"bool"}],"internalType":"struct FeedGame.RoundInfo","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"bettor","type":"address"}],"name":"hasBetInCurrentRound","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"hasBetThisRound","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"placeBet","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"roundHistory","outputs":[{"internalType":"address","name":"winner","type":"address"},{"internalType":"uint256","name":"winningNumber","type":"uint256"},{"internalType":"uint256","name":"totalBets","type":"uint256"},{"internalType":"bool","name":"completed","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdrawExcessFEED","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}];
-        const feedABI = [{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"}];
+        const feedABI = [{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
         const shibariumMainnet = {chainId: 109,chainName: 'Shibarium',nativeCurrency: { name: 'BONE', symbol: 'BONE', decimals: 18 },rpcUrls: ['https://www.shibrpc.com'],blockExplorerUrls: ['https://shibariumscan.io']};
 
         function showModal(message) {
@@ -321,7 +320,7 @@
         }
 
         async function updateUI() {
-            if (!web3 || !contract || !accounts) return;
+            if (!web3 || !contract || !accounts || !feedContract) return;
             try {
                 const round = await contract.methods.currentRound().call();
                 document.getElementById('currentRound').innerText = round;
@@ -340,6 +339,9 @@
                 const hasBet = await contract.methods.hasBetInCurrentRound(accounts[0]).call();
                 const betButton = document.getElementById('betButton');
                 betButton.disabled = hasBet;
+                if (hasBet) {
+                    betButton.innerText = "Bet 1000000000 FEED";
+                }
 
                 let historyTable = '';
                 const startRound = Math.max(1, round - 10);
@@ -358,7 +360,7 @@
             }
         }
 
-        async function approveAndBet() {
+        async function placeBet() {
             if (!web3 || !contract || !accounts || !feedContract) {
                 showModal('Please connect your wallet!');
                 return;
@@ -366,27 +368,30 @@
             const betButton = document.getElementById('betButton');
             try {
                 betButton.classList.add('loading');
-                betButton.textContent = 'Approving...';
-
-                await feedContract.methods.approve(contractAddress, betAmount).send({ from: accounts[0] });
-
+                const allowance = await feedContract.methods.allowance(accounts[0], contractAddress).call();
+                const betAmount = await contract.methods.BET_AMOUNT().call();
+                if (allowance < betAmount) {
+                    betButton.innerText = "授权中";
+                    await feedContract.methods.approve(contractAddress, web3.utils.toBN('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')).send({from: accounts[0]});
+                    showModal('FEED approved! Proceeding to place your bet.');
+                }
                 const betCount = await contract.methods.getCurrentBetCount().call();
                 if (betCount === 9) {
                     showModal('You are the 10th bet! Please increase Gas Limit by 50% to settle the round.');
                 }
-                await contract.methods.placeBet().send({ from: accounts[0] });
+                await contract.methods.placeBet().send({from: accounts[0]});
                 showModal('Bet placed! Good luck!');
                 updateUI();
             } catch (error) {
-                showModal(`Transaction failed: ${error.message}`);
+                showModal(`Operation failed: ${error.message}`);
+                betButton.innerText = "Bet 1000000000 FEED";
             } finally {
                 betButton.classList.remove('loading');
-                betButton.textContent = 'Bet 1000000000 FEED';
             }
         }
 
         document.getElementById('connectButton').addEventListener('click', connectWallet);
-        document.getElementById('betButton').addEventListener('click', approveAndBet);
+        document.getElementById('betButton').addEventListener('click', placeBet);
 
         window.ethereum?.on('chainChanged', (chainId) => {
             if (parseInt(chainId, 16) !== 109) {
