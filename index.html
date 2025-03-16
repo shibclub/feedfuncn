@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoneGame DApp</title>
+    <link rel="icon" type="image/png" href="images/bone.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('images/background.png') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            color: #fff;
+            line-height: 1.4;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            filter: blur(5px);
+            z-index: -1;
+        }
+        .header, .container, footer, .modal {
+            position: relative;
+            z-index: 1;
+        }
+        .header {
+            padding: 10px 0;
+            text-align: center;
+            width: 100%;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            height: 40px;
+        }
+        .header-top .balance {
+            font-size: 1.1em;
+            color: #F4A261;
+        }
+        .header-top .actions {
+            display: flex;
+            gap: 10px;
+        }
+        .action-btn {
+            background: #34495E;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            cursor: pointer;
+        }
+        .header-content {
+            padding: 20px 0;
+        }
+        .header-content h1 {
+            font-size: 1.5em;
+            color: #F4A261;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .game-info {
+            font-size: 0.9em;
+            color: #A8B5D4;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 0 10px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .section {
+            background: rgba(44, 62, 80, 0.9);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        .section-title {
+            font-size: 1.1em;
+            color: #F4A261;
+            margin-bottom: 10px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        button {
+            background: #F4A261;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #E07A5F;
+        }
+        button.loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        input {
+            padding: 8px;
+            border: none;
+            border-radius: 10px;
+            background: #34495E;
+            color: #fff;
+            font-size: 0.9em;
+            text-align: center;
+        }
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 3px #F4A261;
+        }
+        .bets-table, .history-table {
+            width: 100%;
+            margin-top: 10px;
+            font-size: 0.8em;
+            color: #fff;
+        }
+        .bets-table th, .history-table th {
+            color: #F4A261;
+            padding: 5px;
+        }
+        .bets-table td, .history-table td {
+            padding: 5px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #2C3E50;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            color: #fff;
+            max-width: 300px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .modal-content p {
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+        .modal-content button {
+            background: #F4A261;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        footer {
+            background: rgba(30, 42, 68, 0.8);
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            color: #A8B5D4;
+            font-size: 0.8em;
+            margin-top: 20px;
+        }
+        @media (max-width: 480px) {
+            .header-content h1 { font-size: 1.3em; }
+            button { padding: 6px 12px; font-size: 0.8em; }
+            input { font-size: 0.8em; }
+            .bets-table, .history-table { font-size: 0.7em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            <span class="balance" id="bameBalance">0 BAME</span>
+            <div class="actions">
+                <button class="action-btn" onclick="window.open('https://twitter.com/degencoinflip', '_blank')"><i class="fab fa-twitter"></i></button>
+            </div>
+        </div>
+        <div class="header-content">
+            <h1>BoneGame</h1>
+            <div class="game-info">Current Round: <span id="currentRound">1</span></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="section">
+            <div class="section-title">Connect Wallet</div>
+            <div class="button-group">
+                <button id="connectButton">Connect MetaMask</button>
+            </div>
+            <div class="game-info">Wallet: <span id="walletAddress">Not connected</span></div>
+        </div>
+        <div class="section">
+            <div class="section-title">Place Your Bet</div>
+            <div class="button-group">
+                <button id="betButton">Bet 1 BONE</button>
+            </div>
+            <table class="bets-table">
+                <thead>
+                    <tr><th>#</th><th>Bettor</th></tr>
+                </thead>
+                <tbody id="currentBets"></tbody>
+            </table>
+        </div>
+        <div class="section">
+            <div class="section-title">Burn BAME</div>
+            <div class="input-group">
+                <input type="text" id="burnAmount" placeholder="Amount to Burn">
+            </div>
+            <div class="button-group">
+                <button id="burnButton">Burn</button>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-title">Round History</div>
+            <table class="history-table">
+                <thead>
+                    <tr><th>Round</th><th>Winner</th><th>#</th></tr>
+                </thead>
+                <tbody id="roundHistory"></tbody>
+            </table>
+        </div>
+    </div>
+    <footer>Powered by Shibarium © 2025</footer>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <p id="modalMessage"></p>
+            <button onclick="closeModal()">OK</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
+    <script>
+        let web3, accounts, contract;
+        const contractAddress = "0x622c7213Dbbb2b13c208FFA1A19E3B3131C25e1B";
+        const contractABI = [
+            {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},
+            {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"bettor","type":"address"},{"indexed":false,"internalType":"uint256","name":"betNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"round","type":"uint256"}],"name":"BetPlaced","type":"event"},
+            {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},
+            {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"winner","type":"address"},{"indexed":false,"internalType":"uint256","name":"winningNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"round","type":"uint256"}],"name":"RoundCompleted","type":"event"},
+            {"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"round","type":"uint256"}],"name":"RoundStarted","type":"event"},
+            {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"burner","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"TokensBurned","type":"event"},
+            {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},
+            {"inputs":[],"name":"BET_AMOUNT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"LOSER_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"MAX_BETS","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"MAX_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"OWNER_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"WINNER_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"burn","outputs":[],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"currentBets","outputs":[{"internalType":"address","name":"bettor","type":"address"},{"internalType":"uint256","name":"blockNumber","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"currentRound","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[],"name":"getCurrentBetCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"getCurrentBets","outputs":[{"components":[{"internalType":"address","name":"bettor","type":"address"},{"internalType":"uint256","name":"blockNumber","type":"uint256"}],"internalType":"struct BoneGame.Bet[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"uint256","name":"round","type":"uint256"}],"name":"getRoundInfo","outputs":[{"components":[{"internalType":"address","name":"winner","type":"address"},{"internalType":"uint256","name":"winningNumber","type":"uint256"},{"internalType":"uint256","name":"totalBets","type":"uint256"},{"internalType":"bool","name":"completed","type":"bool"}],"internalType":"struct BoneGame.RoundInfo","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"address","name":"bettor","type":"address"}],"name":"hasBetInCurrentRound","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"hasBetThisRound","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"placeBet","outputs":[],"stateMutability":"payable","type":"function"},
+            {"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"roundHistory","outputs":[{"internalType":"address","name":"winner","type":"address"},{"internalType":"uint256","name":"winningNumber","type":"uint256"},{"internalType":"uint256","name":"totalBets","type":"uint256"},{"internalType":"bool","name":"completed","type":"bool"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[],"name":"withdrawExcessBONE","outputs":[],"stateMutability":"nonpayable","type":"function"},
+            {"stateMutability":"payable","type":"receive"}
+        ];
+        const shibariumMainnet = {
+            chainId: 109,
+            chainName: 'Shibarium',
+            nativeCurrency: { name: 'BONE', symbol: 'BONE', decimals: 18 },
+            rpcUrls: ['https://www.shibrpc.com'],
+            blockExplorerUrls: ['https://shibariumscan.io']
+        };
+
+        function showModal(message) {
+            document.getElementById('modalMessage').innerText = message;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        async function connectWallet() {
+            const connectButton = document.getElementById('connectButton');
+            try {
+                if (!window.ethereum) {
+                    showModal('Please install MetaMask!');
+                    return;
+                }
+                connectButton.classList.add('loading');
+                web3 = new Web3(window.ethereum);
+                accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const chainId = await web3.eth.getChainId();
+                if (chainId !== 109) {
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: web3.utils.numberToHex(109) }]
+                        });
+                    } catch (switchError) {
+                        if (switchError.code === 4902) {
+                            await window.ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [shibariumMainnet]
+                            });
+                        } else {
+                            showModal('Please switch to Shibarium!');
+                            return;
+                        }
+                    }
+                }
+                document.getElementById('walletAddress').innerText = `${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
+                contract = new web3.eth.Contract(contractABI, contractAddress);
+                showModal('Connected to Shibarium!');
+                updateUI();
+            } catch (error) {
+                showModal(`Connection failed: ${error.message}`);
+            } finally {
+                connectButton.classList.remove('loading');
+            }
+        }
+
+        async function updateUI() {
+            if (!web3 || !contract || !accounts) return;
+            try {
+                const round = await contract.methods.currentRound().call();
+                document.getElementById('currentRound').innerText = round;
+
+                const betCount = await contract.methods.getCurrentBetCount().call();
+                const bets = await contract.methods.getCurrentBets().call();
+                let betsTable = '';
+                bets.forEach((bet, i) => {
+                    betsTable += `<tr><td>${i}</td><td>${bet.bettor.slice(0, 6)}...${bet.bettor.slice(-4)}</td></tr>`;
+                });
+                document.getElementById('currentBets').innerHTML = betsTable;
+
+                let historyTable = '';
+                for (let i = 1; i < round; i++) {
+                    const info = await contract.methods.getRoundInfo(i).call();
+                    if (info.completed) {
+                        historyTable += `<tr><td>${i}</td><td>${info.winner.slice(0, 6)}...${info.winner.slice(-4)}</td><td>${info.winningNumber}</td></tr>`;
+                    }
+                }
+                document.getElementById('roundHistory').innerHTML = historyTable;
+
+                const balance = await contract.methods.balanceOf(accounts[0]).call();
+                document.getElementById('bameBalance').innerText = `${web3.utils.fromWei(balance, 'ether')} BAME`;
+            } catch (error) {
+                console.error('UI update failed:', error);
+            }
+        }
+
+        async function placeBet() {
+            if (!web3 || !contract || !accounts) {
+                showModal('Please connect your wallet!');
+                return;
+            }
+            const betButton = document.getElementById('betButton');
+            try {
+                betButton.classList.add('loading');
+                await contract.methods.placeBet().send({
+                    from: accounts[0],
+                    value: web3.utils.toWei('1', 'ether')
+                });
+                showModal('Bet placed! Good luck!');
+                updateUI();
+            } catch (error) {
+                showModal(`Bet failed: ${error.message}`);
+            } finally {
+                betButton.classList.remove('loading');
+            }
+        }
+
+        async function burnBAME() {
+            if (!web3 || !contract || !accounts) {
+                showModal('Please connect your wallet!');
+                return;
+            }
+            const amount = document.getElementById('burnAmount').value;
+            if (!amount || isNaN(amount) || amount <= 0) {
+                showModal('Enter a valid amount to burn!');
+                return;
+            }
+            const burnButton = document.getElementById('burnButton');
+            try {
+                burnButton.classList.add('loading');
+                await contract.methods.burn(web3.utils.toWei(amount, 'ether')).send({ from: accounts[0] });
+                showModal(`Burned ${amount} BAME!`);
+                updateUI();
+            } catch (error) {
+                showModal(`Burn failed: ${error.message}`);
+            } finally {
+                burnButton.classList.remove('loading');
+            }
+        }
+
+        document.getElementById('connectButton').addEventListener('click', connectWallet);
+        document.getElementById('betButton').addEventListener('click', placeBet);
+        document.getElementById('burnButton').addEventListener('click', burnBAME);
+
+        window.ethereum?.on('chainChanged', (chainId) => {
+            if (parseInt(chainId, 16) !== 109) {
+                showModal('Please switch to Shibarium!');
+                web3 = null;
+                contract = null;
+                accounts = null;
+                document.getElementById('walletAddress').innerText = 'Not connected';
+            } else {
+                connectWallet();
+            }
+        });
+
+        window.ethereum?.on('accountsChanged', (newAccounts) => {
+            if (newAccounts.length) {
+                connectWallet();
+            } else {
+                showModal('Wallet disconnected!');
+                web3 = null;
+                contract = null;
+                accounts = null;
+                document.getElementById('walletAddress').innerText = 'Not connected';
+            }
+        });
+
+        setInterval(updateUI, 5000);
+    </script>
+</body>
+</html>
