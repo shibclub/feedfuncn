@@ -371,7 +371,7 @@
                 const allowance = await feedContract.methods.allowance(accounts[0], contractAddress).call();
                 const betAmount = await contract.methods.BET_AMOUNT().call();
                 if (allowance < betAmount) {
-                    betButton.innerText = "授权中";
+                    betButton.innerText = "Approving";
                     await feedContract.methods.approve(contractAddress, web3.utils.toBN('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')).send({from: accounts[0]});
                     showModal('FEED approved! Proceeding to place your bet.');
                 }
