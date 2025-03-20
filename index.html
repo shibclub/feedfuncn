@@ -3,15 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FeedGame DApp</title>
+    <title>FeedFun DApp</title>
     <link rel="icon" type="image/png" href="images/feed.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Arial', sans-serif;
             background: url('images/background.png') no-repeat center center fixed;
@@ -40,11 +36,7 @@
             position: relative;
             z-index: 1;
         }
-        .header {
-            padding: 10px 0;
-            text-align: center;
-            width: 100%;
-        }
+        .header { padding: 10px 0; text-align: center; width: 100%; }
         .header-top {
             display: flex;
             justify-content: space-between;
@@ -52,14 +44,8 @@
             padding: 0 15px;
             height: 40px;
         }
-        .header-top .balance {
-            font-size: 1.1em;
-            color: #F4A261;
-        }
-        .header-top .actions {
-            display: flex;
-            gap: 10px;
-        }
+        .header-top .balance { font-size: 1.1em; color: #F4A261; }
+        .header-top .actions { display: flex; gap: 10px; }
         .action-btn {
             background: #34495E;
             color: #fff;
@@ -69,19 +55,9 @@
             font-size: 0.8em;
             cursor: pointer;
         }
-        .header-content {
-            padding: 20px 0;
-        }
-        .header-content h1 {
-            font-size: 1.5em;
-            color: #F4A261;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-        .game-info {
-            font-size: 0.9em;
-            color: #A8B5D4;
-        }
+        .header-content { padding: 20px 0; }
+        .header-content h1 { font-size: 1.5em; color: #F4A261; text-transform: uppercase; margin-bottom: 10px; }
+        .game-info { font-size: 0.9em; color: #A8B5D4; }
         .container {
             width: 100%;
             max-width: 400px;
@@ -98,17 +74,8 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             text-align: center;
         }
-        .section-title {
-            font-size: 1.1em;
-            color: #F4A261;
-            margin-bottom: 10px;
-        }
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
+        .section-title { font-size: 1.1em; color: #F4A261; margin-bottom: 10px; }
+        .button-group { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
         button {
             background: #F4A261;
             color: #fff;
@@ -119,42 +86,19 @@
             font-size: 0.9em;
             transition: background 0.3s;
         }
-        button:hover {
-            background: #E07A5F;
-        }
-        button.loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-        button:disabled {
-            background: #A8B5D4;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
+        button:hover { background: #E07A5F; }
+        button.loading { opacity: 0.7; pointer-events: none; }
+        button:disabled { background: #A8B5D4; cursor: not-allowed; opacity: 0.7; }
         .bets-table, .history-table {
             width: 100%;
             margin-top: 10px;
             font-size: 0.8em;
             color: #fff;
         }
-        .bets-table th, .history-table th {
-            color: #F4A261;
-            padding: 5px;
-        }
-        .bets-table td, .history-table td {
-            padding: 5px;
-        }
-        .rules-text {
-            font-size: 0.9em;
-            color: #A8B5D4;
-            text-align: left;
-            line-height: 1.6;
-        }
-        .bet-position {
-            font-size: 0.9em;
-            color: #F4A261;
-            margin-top: 10px;
-        }
+        .bets-table th, .history-table th { color: #F4A261; padding: 5px; }
+        .bets-table td, .history-table td { padding: 5px; }
+        .rules-text { font-size: 0.9em; color: #A8B5D4; text-align: left; line-height: 1.6; }
+        .bet-position { font-size: 0.9em; color: #F4A261; margin-top: 10px; }
         .modal {
             display: none;
             position: fixed;
@@ -175,25 +119,9 @@
             max-width: 300px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
-        .modal-content p {
-            margin-bottom: 15px;
-            font-size: 1em;
-        }
-        .modal-content button {
-            background: #F4A261;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-        }
-        footer {
-            background: rgba(30, 42, 68, 0.8);
-            text-align: center;
-            padding: 10px;
-            width: 100%;
-            color: #A8B5D4;
-            font-size: 0.8em;
-            margin-top: 20px;
-        }
+        .modal-content p { margin-bottom: 15px; font-size: 1em; }
+        .modal-content button { background: #F4A261; padding: 8px 15px; border-radius: 20px; font-size: 0.9em; }
+        footer { background: rgba(30, 42, 68, 0.8); text-align: center; padding: 10px; width: 100%; color: #A8B5D4; font-size: 0.8em; margin-top: 20px; }
         @media (max-width: 480px) {
             .header-content h1 { font-size: 1.3em; }
             button { padding: 6px 12px; font-size: 0.8em; }
@@ -205,14 +133,14 @@
 <body>
     <div class="header">
         <div class="header-top">
-            <span class="balance" id="fameBalance">0 FAME</span>
+            <span class="balance" id="feedBalance">0 FEED</span>
             <div class="actions">
                 <button class="action-btn" onclick="window.open('https://x.com/feedcto', '_blank')"><i class="fab fa-twitter"></i></button>
             </div>
         </div>
         <div class="header-content">
-            <h1>FeedGame</h1>
-            <div class="game-info">Current Round: <span id="currentRound">1</span></div>
+            <h1>FeedFun</h1>
+            <div class="game-info">Current Round: <span id="currentRound">1</span> | Coin Pool: <span id="coinPool">0 FEED</span></div>
         </div>
     </div>
     <div class="container">
@@ -224,37 +152,55 @@
             <div class="game-info">Wallet: <span id="walletAddress">Not connected</span></div>
         </div>
         <div class="section">
-            <div class="section-title">Place Your Bet</div>
+            <div class="section-title">Set Referrer</div>
+            <input type="text" id="referrerInput" placeholder="Enter referrer address" style="padding: 5px; width: 80%; margin-bottom: 10px; border-radius: 5px;">
             <div class="button-group">
-                <button id="betButton">Bet 1000000000 FEED</button>
+                <button id="setReferrerButton">Set Referrer</button>
+            </div>
+            <div class="game-info">Your Referrer: <span id="referrerAddress">Not set</span></div>
+        </div>
+        <div class="section">
+            <div class="section-title">10 Players Game</div>
+            <div class="button-group">
+                <button id="betButton">Bet 10B FEED</button>
             </div>
             <div class="bet-position" id="betPosition">You are not in this round yet!</div>
             <table class="bets-table">
-                <thead>
-                    <tr><th>#</th><th>Bettor</th></tr>
-                </thead>
+                <thead><tr><th>#</th><th>Bettor</th></tr></thead>
                 <tbody id="currentBets"></tbody>
             </table>
         </div>
         <div class="section">
+            <div class="section-title">Coin Flip Game</div>
+            <div class="button-group">
+                <button id="coinHeadsButton">Heads (1B FEED)</button>
+                <button id="coinTailsButton">Tails (1B FEED)</button>
+            </div>
+            <div class="game-info">Your Losses: <span id="coinLosses">0</span></div>
+        </div>
+        <div class="section">
             <div class="section-title">How to Play</div>
             <div class="rules-text">
-                1. Each round has 10 players.<br>
-                2. Bet 1000000000 FEED to join (1 bet per round).<br>
-                3. When 10 bets are in, a random winner is picked.<br>
-                4. Winner gets 8000000000 FEED, losers each get 10 FAME.<br>
-                5. 2000000000 FEED is burned.<br>
-                6. New round starts automatically!<br>
-                * Note: If you're the 10th bet, prepare 50% more Gas to settle the round.<br>
-                * Approve FEED token before betting.
+                <strong>10 Players Game:</strong><br>
+                1. Bet 10B FEED (needs referrer).<br>
+                2. 10 players per round.<br>
+                3. Winner gets 80B FEED.<br>
+                4. 88B FEED to 10 referrer levels.<br>
+                5. 112B FEED to Coin Pool.<br>
+                6. Auto-settles at 10th bet.<br>
+                * Note: 10th bet needs 50% more Gas.<br>
+                * Approve FEED first.<br>
+                <strong>Coin Flip Game:</strong><br>
+                1. Bet 1B FEED (no referrer needed).<br>
+                2. 40% chance to win 2B FEED.<br>
+                3. Loses go to Coin Pool.<br>
+                4. Pauses if pool < 2B FEED.
             </div>
         </div>
         <div class="section">
             <div class="section-title">Round History (Last 10)</div>
             <table class="history-table">
-                <thead>
-                    <tr><th>Round</th><th>Winner</th><th>#</th></tr>
-                </thead>
+                <thead><tr><th>Round</th><th>Winner</th><th>#</th></tr></thead>
                 <tbody id="roundHistory"></tbody>
             </table>
         </div>
@@ -269,10 +215,10 @@
     <script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
     <script>
         let web3, accounts, contract, feedContract;
-        const contractAddress = "0xaa6A562a1F5c078450Ab9688E57c6C9e2c6E6B42";
+        const contractAddress = "0xE19a03Eb6f3a8652c4b98d30880a6174CBcc0669";
         const feedAddress = "0xe9Cb2D7ADC24Fc59FE00D6C0A0669BDF16805Fe0";
-        const contractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"bettor","type":"address"},{"indexed":false,"internalType":"uint256","name":"betNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"round","type":"uint256"}],"name":"BetPlaced","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"winner","type":"address"},{"indexed":false,"internalType":"uint256","name":"winningNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"round","type":"uint256"}],"name":"RoundCompleted","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"round","type":"uint256"}],"name":"RoundStarted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"burner","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"TokensBurned","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[],"name":"BET_AMOUNT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"BURN_ADDRESS","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"BURN_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"FEED","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"LOSER_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_BETS","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"WINNER_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"burn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"currentBets","outputs":[{"internalType":"address","name":"bettor","type":"address"},{"internalType":"uint256","name":"blockNumber","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"currentRound","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getCurrentBetCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getCurrentBets","outputs":[{"components":[{"internalType":"address","name":"bettor","type":"address"},{"internalType":"uint256","name":"blockNumber","type":"uint256"}],"internalType":"struct FeedGame.Bet[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"round","type":"uint256"}],"name":"getRoundInfo","outputs":[{"components":[{"internalType":"address","name":"winner","type":"address"},{"internalType":"uint256","name":"winningNumber","type":"uint256"},{"internalType":"uint256","name":"totalBets","type":"uint256"},{"internalType":"bool","name":"completed","type":"bool"}],"internalType":"struct FeedGame.RoundInfo","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"bettor","type":"address"}],"name":"hasBetInCurrentRound","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"hasBetThisRound","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"placeBet","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"roundHistory","outputs":[{"internalType":"address","name":"winner","type":"address"},{"internalType":"uint256","name":"winningNumber","type":"uint256"},{"internalType":"uint256","name":"totalBets","type":"uint256"},{"internalType":"bool","name":"completed","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdrawExcessFEED","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}];
-        const feedABI = [{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
+        const contractABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"bettor","type":"address"},{"indexed":false,"internalType":"uint256","name":"betNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"round","type":"uint256"}],"name":"BetPlaced","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"player","type":"address"},{"indexed":false,"internalType":"bool","name":"won","type":"bool"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"CoinGamePlayed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":true,"internalType":"address","name":"referrer","type":"address"}],"name":"ReferralSet","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"winner","type":"address"},{"indexed":false,"internalType":"uint256","name":"winningNumber","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"round","type":"uint256"}],"name":"RoundCompleted","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"round","type":"uint256"}],"name":"RoundStarted","type":"event"},{"inputs":[],"name":"COIN_BET_AMOUNT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"COIN_WIN_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"FEED","outputs":[{"internalType":"contract IERC20","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_BETS","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"TEN_BET_AMOUNT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"TEN_WINNER_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"currentBets","outputs":[{"internalType":"address","name":"bettor","type":"address"},{"internalType":"uint256","name":"blockNumber","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"currentRound","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"coinGamePool","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"emergencyWithdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getCurrentBetCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getCurrentBets","outputs":[{"components":[{"internalType":"address","name":"bettor","type":"address"},{"internalType":"uint256","name":"blockNumber","type":"uint256"}],"internalType":"struct FeedFun.Bet[]","name":"","type":"tuple[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getLossCount","outputs":[{"internalType":"uint256","name":"tenLosses","type":"uint256"},{"internalType":"uint256","name":"coinLosses","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"round","type":"uint256"}],"name":"getRoundInfo","outputs":[{"components":[{"internalType":"address","name":"winner","type":"address"},{"internalType":"uint256","name":"winningNumber","type":"uint256"},{"internalType":"uint256","name":"totalBets","type":"uint256"},{"internalType":"bool","name":"completed","type":"bool"}],"internalType":"struct FeedFun.RoundInfo","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"bettor","type":"address"}],"name":"hasBetInCurrentRound","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"hasBetThisRound","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"placeBet","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bool","name":"guess","type":"bool"}],"name":"playCoinGame","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"referrers","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"roundHistory","outputs":[{"internalType":"address","name":"winner","type":"address"},{"internalType":"uint256","name":"winningNumber","type":"uint256"},{"internalType":"uint256","name":"totalBets","type":"uint256"},{"internalType":"bool","name":"completed","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"referrer","type":"address"}],"name":"setReferrer","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"tenGameLossCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"coinGameLossCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
+        const feedABI = [{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
         const shibariumMainnet = {chainId: 109,chainName: 'Shibarium',nativeCurrency: { name: 'BONE', symbol: 'BONE', decimals: 18 },rpcUrls: ['https://www.shibrpc.com'],blockExplorerUrls: ['https://shibariumscan.io']};
 
         function showModal(message) {
@@ -325,6 +271,9 @@
                 const round = await contract.methods.currentRound().call();
                 document.getElementById('currentRound').innerText = round;
 
+                const coinPool = await contract.methods.coinGamePool().call();
+                document.getElementById('coinPool').innerText = `${web3.utils.fromWei(coinPool, 'ether')} FEED`;
+
                 const betCount = await contract.methods.getCurrentBetCount().call();
                 const bets = await contract.methods.getCurrentBets().call();
                 let betsTable = '';
@@ -339,9 +288,10 @@
                 const hasBet = await contract.methods.hasBetInCurrentRound(accounts[0]).call();
                 const betButton = document.getElementById('betButton');
                 betButton.disabled = hasBet;
-                if (hasBet) {
-                    betButton.innerText = "Bet 1000000000 FEED";
-                }
+
+                const referrer = await contract.methods.referrers(accounts[0]).call();
+                document.getElementById('referrerAddress').innerText = referrer === '0x0000000000000000000000000000000000000000' ? 'Not set' : `${referrer.slice(0, 6)}...${referrer.slice(-4)}`;
+                document.getElementById('setReferrerButton').disabled = referrer !== '0x0000000000000000000000000000000000000000';
 
                 let historyTable = '';
                 const startRound = Math.max(1, round - 10);
@@ -353,10 +303,40 @@
                 }
                 document.getElementById('roundHistory').innerHTML = historyTable;
 
-                const balance = await contract.methods.balanceOf(accounts[0]).call();
-                document.getElementById('fameBalance').innerText = `${web3.utils.fromWei(balance, 'ether')} FAME`;
+                const balance = await feedContract.methods.balanceOf(accounts[0]).call();
+                document.getElementById('feedBalance').innerText = `${web3.utils.fromWei(balance, 'ether')} FEED`;
+
+                const [tenLosses, coinLosses] = await contract.methods.getLossCount(accounts[0]).call();
+                document.getElementById('coinLosses').innerText = coinLosses;
+
+                const coinPoolValue = web3.utils.fromWei(coinPool, 'ether');
+                const coinButtons = [document.getElementById('coinHeadsButton'), document.getElementById('coinTailsButton')];
+                coinButtons.forEach(btn => btn.disabled = coinPoolValue < 2);
             } catch (error) {
                 console.error('UI update failed:', error);
+            }
+        }
+
+        async function setReferrer() {
+            if (!web3 || !contract || !accounts || !feedContract) {
+                showModal('Please connect your wallet!');
+                return;
+            }
+            const referrerInput = document.getElementById('referrerInput').value;
+            if (!web3.utils.isAddress(referrerInput)) {
+                showModal('Invalid referrer address!');
+                return;
+            }
+            const button = document.getElementById('setReferrerButton');
+            try {
+                button.classList.add('loading');
+                await contract.methods.setReferrer(referrerInput).send({from: accounts[0]});
+                showModal('Referrer set successfully!');
+                updateUI();
+            } catch (error) {
+                showModal(`Failed to set referrer: ${error.message}`);
+            } finally {
+                button.classList.remove('loading');
             }
         }
 
@@ -365,33 +345,62 @@
                 showModal('Please connect your wallet!');
                 return;
             }
-            const betButton = document.getElementById('betButton');
+            const button = document.getElementById('betButton');
             try {
-                betButton.classList.add('loading');
+                button.classList.add('loading');
                 const allowance = await feedContract.methods.allowance(accounts[0], contractAddress).call();
-                const betAmount = await contract.methods.BET_AMOUNT().call();
+                const betAmount = await contract.methods.TEN_BET_AMOUNT().call();
                 if (allowance < betAmount) {
-                    betButton.innerText = "Approving";
+                    button.innerText = "Approving";
                     await feedContract.methods.approve(contractAddress, web3.utils.toBN('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')).send({from: accounts[0]});
-                    showModal('FEED approved! Proceeding to place your bet.');
+                    showModal('FEED approved! Proceeding to place bet.');
                 }
                 const betCount = await contract.methods.getCurrentBetCount().call();
-                if (betCount === 9) {
-                    showModal('You are the 10th bet! Please increase Gas Limit by 50% to settle the round.');
+                if (betCount == 9) {
+                    showModal('You are the 10th bet! Increase Gas Limit by 50% to settle the round.');
                 }
                 await contract.methods.placeBet().send({from: accounts[0]});
                 showModal('Bet placed! Good luck!');
                 updateUI();
             } catch (error) {
                 showModal(`Operation failed: ${error.message}`);
-                betButton.innerText = "Bet 1000000000 FEED";
             } finally {
-                betButton.classList.remove('loading');
+                button.classList.remove('loading');
+                button.innerText = "Bet 10B FEED";
+            }
+        }
+
+        async function playCoinGame(guess) {
+            if (!web3 || !contract || !accounts || !feedContract) {
+                showModal('Please connect your wallet!');
+                return;
+            }
+            const button = guess ? document.getElementById('coinHeadsButton') : document.getElementById('coinTailsButton');
+            try {
+                button.classList.add('loading');
+                const allowance = await feedContract.methods.allowance(accounts[0], contractAddress).call();
+                const betAmount = await contract.methods.COIN_BET_AMOUNT().call();
+                if (allowance < betAmount) {
+                    button.innerText = "Approving";
+                    await feedContract.methods.approve(contractAddress, web3.utils.toBN('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')).send({from: accounts[0]});
+                    showModal('FEED approved! Proceeding to flip coin.');
+                }
+                await contract.methods.playCoinGame(guess).send({from: accounts[0]});
+                showModal(`Coin flipped! Check your wallet for result.`);
+                updateUI();
+            } catch (error) {
+                showModal(`Operation failed: ${error.message}`);
+            } finally {
+                button.classList.remove('loading');
+                button.innerText = guess ? "Heads (1B FEED)" : "Tails (1B FEED)";
             }
         }
 
         document.getElementById('connectButton').addEventListener('click', connectWallet);
+        document.getElementById('setReferrerButton').addEventListener('click', setReferrer);
         document.getElementById('betButton').addEventListener('click', placeBet);
+        document.getElementById('coinHeadsButton').addEventListener('click', () => playCoinGame(true));
+        document.getElementById('coinTailsButton').addEventListener('click', () => playCoinGame(false));
 
         window.ethereum?.on('chainChanged', (chainId) => {
             if (parseInt(chainId, 16) !== 109) {
